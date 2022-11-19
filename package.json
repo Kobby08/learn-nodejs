@@ -1,0 +1,12 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "git@github.com:Kobby08/learn-nodejs.git",
+  "author": "Nana Quam <quamgyambrah@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
