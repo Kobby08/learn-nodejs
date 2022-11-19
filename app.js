@@ -3,6 +3,9 @@ const express = require("express");
 // create an instance of an express app
 const app = express();
 
+// register view egine
+app.set("view engine", "ejs");
+
 // set port for express app to listen to
 const port = 3000;
 app.listen(port, () => {
