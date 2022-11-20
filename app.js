@@ -1,17 +1,34 @@
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 // create an instance of an express app
 const app = express();
 
-// register view egine
-app.set("view engine", "ejs");
-
 // set port for express app to listen to
 const port = 3000;
-app.listen(port, () => {
-  console.log(`Express app listening on port ${port}`);
-});
+
+// connect to mongoDB
+const connectionURL =
+  "mongodb+srv://troops:linu$008@cluster0.w4ycqka.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose
+  .connect(connectionURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((result) => {
+    // listen to requests after db connection is established
+    app.listen(port, () => {
+      console.log(`Express app listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// register view egine
+app.set("view engine", "ejs");
 
 // middlewares and stattic files
 app.use(morgan("dev"));
