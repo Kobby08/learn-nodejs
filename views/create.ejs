@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Dojo | <%= title %></title>
   </head>
+
   <body>
     <nav>
       <div class="site-title">
@@ -19,9 +19,16 @@
       </ul>
     </nav>
 
-    <div class="about content">
-      <h2>About Us</h2>
-      <p>We serve you good info</p>
+    <div class="create-blog content">
+      <form>
+        <label for="title">Blog title:</label>
+        <input type="text" id="title" name="title" required />
+        <label for="snippet">Blog snippet:</label>
+        <input type="text" id="snippet" name="snippet" required />
+        <label for="body">Blog body:</label>
+        <textarea id="body" name="body" required></textarea>
+        <button>Submit</button>
+      </form>
     </div>
   </body>
 </html>
