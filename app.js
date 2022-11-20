@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 
 // create an instance of an express app
 const app = express();
@@ -11,6 +12,10 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`Express app listening on port ${port}`);
 });
+
+// middlewares and stattic files
+app.use(morgan("dev"));
+app.use(express.static("public"));
 
 // requests handlers
 app.get("/", (req, res) => {
@@ -48,4 +53,12 @@ app.get("/about-us", (req, res) => {
 // 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "Create Blog" });
+});
+
+// middlewares are functions that run in between a req and a res.
+app.use((req, res, next) => {
+  console.log("host: ", req.hostname);
+  console.log("path: ", req.path);
+  console.log("method: ", req.method);
+  next();
 });
