@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const Blog = require("./models/blog");
 
 // create an instance of an express app
 const app = express();
@@ -10,7 +11,7 @@ const port = 3000;
 
 // connect to mongoDB
 const connectionURL =
-  "mongodb+srv://troops:linu$008@cluster0.w4ycqka.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://troops:linu$008@cluster0.w4ycqka.mongodb.net/blog-dojo?retryWrites=true&w=majority";
 
 mongoose
   .connect(connectionURL, {
@@ -33,6 +34,41 @@ app.set("view engine", "ejs");
 // middlewares and stattic files
 app.use(morgan("dev"));
 app.use(express.static("public"));
+
+// mongoose request handlers
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "Blog 2",
+    snippet: "have a sneek preview",
+    body: "have the actual content",
+  });
+  blog
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/blogs", async (req, res) => {
+  try {
+    const blogs = await Blog.find();
+    res.send(blogs);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/blog", async (req, res) => {
+  try {
+    const blog = await Blog.findById("637aaf135b120d9ec7c0c7c9");
+    res.send(blog);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // requests handlers
 app.get("/", (req, res) => {
