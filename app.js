@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
+const { title } = require("process");
 
 // create an instance of an express app
 const app = express();
@@ -34,6 +35,7 @@ app.set("view engine", "ejs");
 // middlewares and stattic files
 app.use(morgan("dev"));
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true })); // used to accept form data
 
 // routes
 app.get("/", (req, res) => {
@@ -66,6 +68,16 @@ app.get("/blog", async (req, res) => {
 
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create Blog" });
+});
+
+app.post("/blogs", async (req, res) => {
+  try {
+    const blog = new Blog(req.body);
+    await blog.save();
+    res.redirect("/blogs");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // 404 page
