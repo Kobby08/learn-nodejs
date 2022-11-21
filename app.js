@@ -32,7 +32,7 @@ mongoose
 // register view egine
 app.set("view engine", "ejs");
 
-// middlewares and stattic files
+// middlewares and static files
 app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true })); // used to accept form data
@@ -75,6 +75,16 @@ app.post("/blogs", async (req, res) => {
     const blog = new Blog(req.body);
     await blog.save();
     res.redirect("/blogs");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/blogs/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const blog = await Blog.findById(id);
+    res.render("details", { title: blog.title, blog });
   } catch (error) {
     console.log(error);
   }
